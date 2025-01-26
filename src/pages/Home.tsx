@@ -3,8 +3,8 @@ import LinkIcon from "../components/Icons/LinkIcon";
 
 export function Home() {
     return (
-        <div className="min-h-screen mt-24">
-            <div className="container max-w-7xl mx-auto px-4 text-center">
+        <div className="mt-24">
+            <div className="max-w-7xl mx-auto px-4 text-center">
                 <h1 className="text-4xl font-bold mb-6">
                     Acorta tus enlaces, expande tus posibilidades
                 </h1>

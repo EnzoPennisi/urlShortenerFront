@@ -5,6 +5,7 @@ import { Header } from "./components/Header/Header";
 import { AuthenticationGuard } from "./components/auth0/AuthtenticationGuard";
 import { Dashboard } from "./pages/Dashboard";
 import { CallbackPage } from "./components/auth0/CallbackPage";
+import { Footer } from "./components/Footer";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
+      <Footer />
     </>
   );
 }
