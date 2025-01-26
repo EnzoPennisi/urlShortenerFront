@@ -1,4 +1,4 @@
-import { NewUrl, UpdateUrl } from "../types/types";
+import { NewUrl, UpdateUrl, Url } from "../types/types";
 
 const dominio = 'http://localhost:8080/api/url';
 
@@ -31,21 +31,9 @@ export async function getUrlByUserId(userId: number, token: string) {
             }
         });
 
-        return response.json();
+        return response.json() as Promise<Url[]>;
     } catch (error) {
         console.error('Error al obtener la URL:', error);
-    }
-}
-
-//no necesita token para redirigir
-export async function redirectUrl(shortUrl: string) {
-    const urlFetch = dominio + `/${shortUrl}`;
-
-    try {
-        const response = await fetch(urlFetch);
-        return response.json();
-    } catch (error) {
-        console.error('Error al redirigir la URL:', error);
     }
 }
 

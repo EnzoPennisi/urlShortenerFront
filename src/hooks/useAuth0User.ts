@@ -38,9 +38,14 @@ export function useAuth0User() {
             }
 
             const userCreated = await createUser(newUser, token);
-            localStorage.setItem('user', JSON.stringify(userCreated));
+
+            if (userCreated) {
+                localStorage.setItem('user', JSON.stringify(userCreated));
+            }
         }
 
         saveUserToDB();
-    }, [user, isAuthenticated, getToken]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user, isAuthenticated]);
 }
