@@ -24,7 +24,7 @@ export function UrlCard({ url, onEdit, fetchUrls }: UrlCardProps) {
             <span className="font-semibold opacity-70 overflow-hidden text-ellipsis whitespace-nowrap" title={url.originalLink}>
                 {url.originalLink}
             </span>
-            <span className="text-sm opacity-70 overflow-hidden text-ellipsis whitespace-nowrap" title={url.description}>
+            <span className="text-sm h-5 opacity-70 overflow-hidden text-ellipsis whitespace-nowrap" title={url.description}>
                 {url.description}
             </span>
             <div className="flex justify-between text-sm opacity-70">

@@ -57,8 +57,10 @@ export function FormModal({ showModal, handleClose, fetchUrls, urlId, currentUse
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.originalLink || !formData.description) {
-            setTxtValidacion("Todos los campos son requeridos");
+        console.log(formData)
+
+        if (!formData.originalLink) {
+            setTxtValidacion("El enlace es obligatorio");
             return;
         }
 
@@ -100,7 +102,8 @@ export function FormModal({ showModal, handleClose, fetchUrls, urlId, currentUse
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden h-screen bg-[#00000076]"
             onClick={handleCloseAndClear}>
-            <div className="relative p-4 w-full max-w-md max-h-full">
+            <div className="relative p-4 w-full max-w-md max-h-full"
+                onClick={(e) => e.stopPropagation()}>
                 <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
 
                     {/* Header */}
@@ -132,7 +135,7 @@ export function FormModal({ showModal, handleClose, fetchUrls, urlId, currentUse
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="https://ejemplo.com" />
                             </div>
                             <div className="col-span-2">
-                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción (opcional)</label>
                                 <textarea
                                     name="description"
                                     rows={4}
