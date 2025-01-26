@@ -5,11 +5,9 @@ import { LogoutButton } from "./LogoutButton";
 import { LogginButton } from "./LogginButton";
 import { RegisterButton } from "./RegisterButton";
 import { UserInfo } from "./UserInfo";
-import { useAuth0User } from "../../hooks/useAuth0User";
 
 export function Header() {
 
-    useAuth0User();
     const { isAuthenticated } = useAuth0();
 
     return (

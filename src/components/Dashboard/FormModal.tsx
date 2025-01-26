@@ -1,23 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NewUrl, Url } from "../../types/types";
 import { createShortUrl, getUrlById, updateUrl } from "../../api/urlApi";
 import { useAuth0Token } from "../../hooks/useAuth0Token";
+import { UserContext } from "../../context/UserContext";
 
 interface ModalProps {
     showModal: boolean;
     handleClose: () => void;
     fetchUrls: () => void;
-    userId: number;
     urlId?: number | null; // if urlId is present, it means we are editing an existing url
+    currentUserId: number;
 }
 
-export function FormModal({ showModal, handleClose, fetchUrls, urlId, userId }: ModalProps) {
+export function FormModal({ showModal, handleClose, fetchUrls, urlId, currentUserId }: ModalProps) {
+
+    const { currentUser } = useContext(UserContext);
 
     const { getToken } = useAuth0Token();
     const initialUrl = {
         originalLink: "",
         description: "",
-        idUser: userId
+        idUser: currentUserId
     }
 
     const [txtValidacion, setTxtValidacion] = useState<string>("");
@@ -25,22 +28,21 @@ export function FormModal({ showModal, handleClose, fetchUrls, urlId, userId }: 
     const [formData, setFormData] = useState<NewUrl>(initialUrl);
 
     useEffect(() => {
-
         const getUrlFromDB = async () => {
             if (urlId) {
                 const token = await getToken() as string;
-                const actualUrl: Url = await getUrlById(urlId, token)
+                const actualUrl: Url = await getUrlById(urlId, token);
                 setFormData({
                     originalLink: actualUrl.originalLink,
                     description: actualUrl.description,
+                    idUser: currentUser?.id || 0, // Fallback si currentUser no está disponible
                 });
             }
-        }
+        };
 
         getUrlFromDB();
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [urlId]);
+    }, [urlId, currentUser]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setTxtValidacion("");
@@ -96,7 +98,8 @@ export function FormModal({ showModal, handleClose, fetchUrls, urlId, userId }: 
     if (!showModal) return null
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden h-screen bg-[#00000076]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden h-screen bg-[#00000076]"
+            onClick={handleCloseAndClear}>
             <div className="relative p-4 w-full max-w-md max-h-full">
                 <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
 
