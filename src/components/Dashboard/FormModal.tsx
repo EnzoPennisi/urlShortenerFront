@@ -1,33 +1,35 @@
 import { useEffect, useState } from "react";
-import { NewUrl, Url, User } from "../../types/types";
-import { createShortUrl, getUrlById } from "../../api/urlApi";
+import { NewUrl, Url } from "../../types/types";
+import { createShortUrl, getUrlById, updateUrl } from "../../api/urlApi";
 import { useAuth0Token } from "../../hooks/useAuth0Token";
 
 interface ModalProps {
     showModal: boolean;
     handleClose: () => void;
-    editing?: boolean;
-    id?: number;
+    fetchUrls: () => void;
+    userId: number;
+    urlId?: number | null; // if urlId is present, it means we are editing an existing url
 }
 
-export function FormModal({ showModal, handleClose, editing, id }: ModalProps) {
+export function FormModal({ showModal, handleClose, fetchUrls, urlId, userId }: ModalProps) {
 
     const { getToken } = useAuth0Token();
-    const storedUser = localStorage.getItem("user");
-    const user: User | null = storedUser ? JSON.parse(storedUser) : null;
-
-    const [formData, setFormData] = useState<NewUrl>({
+    const initialUrl = {
         originalLink: "",
         description: "",
-        idUser: user?.id || 0
-    })
+        idUser: userId
+    }
+
+    const [txtValidacion, setTxtValidacion] = useState<string>("");
+
+    const [formData, setFormData] = useState<NewUrl>(initialUrl);
 
     useEffect(() => {
 
         const getUrlFromDB = async () => {
-            if (editing && id) {
+            if (urlId) {
                 const token = await getToken() as string;
-                const actualUrl: Url = await getUrlById(id, token)
+                const actualUrl: Url = await getUrlById(urlId, token)
                 setFormData({
                     originalLink: actualUrl.originalLink,
                     description: actualUrl.description,
@@ -38,9 +40,11 @@ export function FormModal({ showModal, handleClose, editing, id }: ModalProps) {
         getUrlFromDB();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [editing, id]);
+    }, [urlId]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setTxtValidacion("");
+
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -50,13 +54,44 @@ export function FormModal({ showModal, handleClose, editing, id }: ModalProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(formData);
-        const token = await getToken() as string;
-        const result = await createShortUrl(formData, token);
-        console.log(result);
-        handleClose();
 
+        if (!formData.originalLink || !formData.description) {
+            setTxtValidacion("Todos los campos son requeridos");
+            return;
+        }
+
+        //validar que sea una url valida
+        const urlRegex = /^(http|https):\/\/[^ "]+$/;
+        if (!urlRegex.test(formData.originalLink)) {
+            setTxtValidacion("El enlace no es válido");
+            return;
+        }
+
+        //validar que la descripcion tenga menos de 255 caracteres
+        if (formData.description.length > 255) {
+            setTxtValidacion("La descripción no debe tener más de 255 caracteres");
+            return;
+        }
+
+        const token = await getToken() as string;
+
+        if (urlId) {
+            await updateUrl(urlId, formData, token);
+        } else {
+            await createShortUrl(formData, token);
+        }
+
+
+        fetchUrls();
+        handleCloseAndClear();
     };
+
+    const handleCloseAndClear = () => {
+        handleClose();
+        setTxtValidacion("");
+        setFormData(initialUrl);
+    };
+
 
     if (!showModal) return null
 
@@ -68,12 +103,12 @@ export function FormModal({ showModal, handleClose, editing, id }: ModalProps) {
                     {/* Header */}
                     <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                            {editing ? "Editar " : "Crear un nuevo"} enlace corto
+                            {urlId ? "Editar " : "Crear un nuevo"} enlace corto
                         </h3>
                         <button
                             type="button"
                             className="text-gray-400 bg-transparent hover:bg-red-200 hover:text-red-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center cursor-pointer transition-all"
-                            onClick={handleClose}
+                            onClick={handleCloseAndClear}
                         >
                             <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
@@ -89,6 +124,7 @@ export function FormModal({ showModal, handleClose, editing, id }: ModalProps) {
                                 <input
                                     type="text"
                                     name="originalLink"
+                                    value={formData.originalLink}
                                     onChange={handleChange}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="https://ejemplo.com" />
                             </div>
@@ -97,20 +133,21 @@ export function FormModal({ showModal, handleClose, editing, id }: ModalProps) {
                                 <textarea
                                     name="description"
                                     rows={4}
+                                    value={formData.description}
                                     onChange={handleChange}
                                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Describe tu enlace"></textarea>
                             </div>
                         </div>
                         <button type="submit" className="text-white inline-flex items-center bg-blue-900 hover:bg-blue-700 transition-all focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
-                            {editing ? "Guardar cambios" : "Crear enlace corto"}
+                            {urlId ? "Guardar cambios" : "Crear enlace corto"}
                         </button>
+
+                        <div className="text-red-500 text-sm mt-2">
+                            {txtValidacion}
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     );
 }
-
-
-
-
