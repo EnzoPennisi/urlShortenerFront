@@ -41,7 +41,6 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
         const userExists = await findUserByUsername(username, token);
 
         if (userExists) {
-            console.log('El usuario ya existe');
             setCurrentUser(userExists);
             return;
         }
@@ -54,7 +53,6 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
 
         if (userCreated) {
             setCurrentUser(userCreated);
-            console.log('Usuario creado', userCreated);
         }
     }
 

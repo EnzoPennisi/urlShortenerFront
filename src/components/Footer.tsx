@@ -3,13 +3,13 @@ import linkedinIcon from '../assets/linkedin.svg';
 
 export function Footer() {
     return (
-        <footer className="bg-[rgba(18,18,18,0.38)] text-white p-4 fixed bottom-0 left-0 right-0 h-16 z-10 backdrop-blur-2xl flex justify-between items-center max-w-7xl mx-auto">
-            <p>ShortLink - hecho por Enzo Pennisi</p>
+        <footer className="w-[95%] sm:max-w-7xl bg-[rgba(18,18,18,0.38)] text-white p-4 fixed bottom-0 left-0 right-0 h-16 z-10 backdrop-blur-2xl flex justify-between items-center text-sm sm:text-base mx-auto">
+            <span>ShortLink - desarrollado por Enzo Pennisi</span>
             <div className="flex gap-4">
                 <a href="https://github.com/EnzoPennisi" target='_blank' rel='noreferrer'>
                     <img
                         src={githubIcon}
-                        className='w-10 h-10 bg-auto rounded-full'
+                        className='size-8 sm:size-10 bg-auto rounded-full'
                         style={{ transition: 'box-shadow 0.3s ease-in-out' }}
                         onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 20px rgba(255, 255, 255, 1)'}
                         onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 255, 255, 0.5)'}
@@ -18,7 +18,7 @@ export function Footer() {
                 <a href="https://www.linkedin.com/in/enzo-pennisi-670a882b3/" target='_blank' rel='noreferrer'>
                     <img
                         src={linkedinIcon}
-                        className='w-10 h-10 bg-auto rounded-xl'
+                        className='size-8 sm:size-10 bg-auto rounded-xl'
                         style={{ transition: 'box-shadow 0.3s ease-in-out' }}
                         onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 119, 181, 1)'}
                         onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 119, 181, 0.5)'}

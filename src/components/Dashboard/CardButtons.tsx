@@ -63,11 +63,11 @@ export function CardButtons({ accessCount, urlId, shortUrl, onEdit, fetchUrls }:
     }
 
     return (
-        <div className="flex gap-2 items-center font-semibold">
-            <span>
+        <div className="flex gap-1 sm:gap-2 items-center font-semibold">
+            <span className="mr-2 text-sm sm:text-base">
                 Accesos: {accessCount}
             </span>
-            <span> | </span>
+            <span>|</span>
             <button
                 className="p-2 hover:text-blue-500 hover:bg-blue-100 transition-all duration-200 rounded-full  cursor-pointer"
                 title="Editar"

@@ -12,16 +12,16 @@ export function Header() {
 
     return (
         <header className=" bg-[rgb(18,18,18)] relative z-10">
-            <div className="max-w-7xl mx-auto py-6 flex justify-between items-center">
+            <div className="w-[95%] sm:max-w-7xl mx-auto py-6 flex justify-between items-center">
                 {/* Logo Section */}
                 <Link to="/" className="flex items-center space-x-2 hover:text-fuchsia-600 transition-all cursor-pointer">
                     <LinkIcon />
-                    <span className="font-bold text-xl">ShortLink</span>
+                    <span className="font-bold text-sm sm:text-xl">ShortLink</span>
                 </Link>
 
                 {isAuthenticated ?
                     (
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center gap-9 sm:gap-0">
                             <UserInfo />
                             <LogoutButton />
                         </div>

@@ -12,7 +12,7 @@ export function UrlCard({ url, onEdit, fetchUrls }: UrlCardProps) {
     const dominio = 'http://localhost:8080';
 
     return (
-        <article className="flex flex-col w-xl h-40 border border-[#ffffff29] rounded-2xl p-4 gap-2 shadow-lg bg-gray-800">
+        <article className="flex flex-col w-[95%] sm:w-xl h-40 border border-[#ffffff29] rounded-2xl p-4 gap-2 shadow-lg bg-gray-800">
             <div className="flex justify-between items-center">
                 <a href={`${dominio}/${url.shortenedLink}`} target="_blank" rel="noreferrer">
                     <span className="text-lg font-bold hover:text-fuchsia-600 transition-all cursor-pointer">

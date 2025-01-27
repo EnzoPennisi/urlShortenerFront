@@ -57,8 +57,6 @@ export function FormModal({ showModal, handleClose, fetchUrls, urlId, currentUse
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        console.log(formData)
-
         if (!formData.originalLink) {
             setTxtValidacion("El enlace es obligatorio");
             return;
