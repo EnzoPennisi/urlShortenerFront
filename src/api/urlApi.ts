@@ -1,6 +1,6 @@
 import { NewUrl, UpdateUrl, Url } from "../types/types";
 
-const dominio = 'http://localhost:8080/api/url';
+const dominio = 'https://shrt-twc9.onrender.com/api/url';
 
 // --- GET ---
 export async function getUrlById(id: number, token: string) {

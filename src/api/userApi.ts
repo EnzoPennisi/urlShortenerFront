@@ -1,6 +1,6 @@
 import { NewUser, User } from "../types/types";
 
-const dominio = 'http://localhost:8080/api/user';
+const dominio = 'https://shrt-twc9.onrender.com/api/user';
 
 // --- GET ---
 export async function findUserByUsername(username: string, token: string) {

@@ -25,7 +25,7 @@ export function CardButtons({ accessCount, urlId, shortUrl, onEdit, fetchUrls }:
     const [copiedLink, setCopiedLink] = useState<string | null>(null)
     const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false)
     const [showQrModal, setShowQrModal] = useState<boolean>(false)
-    const dominio = "http://localhost:8080/"
+    const dominio = "https://shrt-twc9.onrender.com/"
 
     const handleCopy = (shortenedLink: string) => {
         const url = dominio + shortenedLink

@@ -9,7 +9,7 @@ interface UrlCardProps {
 
 export function UrlCard({ url, onEdit, fetchUrls }: UrlCardProps) {
 
-    const dominio = 'http://localhost:8080';
+    const dominio = 'https://shrt-twc9.onrender.com';
 
     return (
         <article className="flex flex-col w-[95%] sm:w-xl h-40 border border-[#ffffff29] rounded-2xl p-4 gap-2 shadow-lg hover:border-indigo-500 hover:shadow-sm hover:shadow-indigo-500 transition-all duration-300">
