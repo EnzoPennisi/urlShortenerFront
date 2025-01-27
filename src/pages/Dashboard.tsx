@@ -49,12 +49,12 @@ export function Dashboard() {
 
     return (
         <div className='w-[95%] sm:max-w-7xl mx-auto mt-12'>
-            <div className="flex flex-col justify-center items-center sm:flex-row sm:justify-between sm:items-center  sm:mb-8">
+            <div className="flex flex-col justify-center items-center sm:flex-row sm:justify-between sm:items-center sm:mb-8">
                 <h1 className="text-2xl mb-7 sm:text-3xl sm:mb-0 font-bold">Mis URLs Acortadas</h1>
 
                 <button
                     onClick={openCreateModal}
-                    className="bg-blue-900 hover:bg-blue-700 transition-all text-white text-sm font-bold py-2 px-4 rounded-lg flex items-center cursor-pointer"
+                    className="bg-blue-900 hover:bg-blue-700 transition-all text-white text-sm sm:text-base font-bold py-2 px-4 rounded-lg flex items-center cursor-pointer"
                 >
                     <AddIcon />
                     Crear nuevo enlace

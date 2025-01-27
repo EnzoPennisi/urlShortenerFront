@@ -3,7 +3,7 @@ import linkedinIcon from '../assets/linkedin.svg';
 
 export function Footer() {
     return (
-        <footer className="w-[95%] sm:max-w-7xl bg-[rgba(18,18,18,0.38)] text-white p-4 fixed bottom-0 left-0 right-0 h-16 z-10 backdrop-blur-2xl flex justify-between items-center text-sm sm:text-base mx-auto">
+        <footer className="w-[95%] sm:max-w-7xl bg-[rgba(18,18,18,0.38)] text-white fixed bottom-0 left-0 right-0 h-16 z-10 backdrop-blur-2xl flex justify-between items-center text-sm sm:text-base mx-auto">
             <span>ShortLink - desarrollado por Enzo Pennisi</span>
             <div className="flex gap-4">
                 <a href="https://github.com/EnzoPennisi" target='_blank' rel='noreferrer'>
