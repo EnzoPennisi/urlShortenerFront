@@ -37,6 +37,12 @@ export async function getUrlByUserId(userId: number, token: string) {
     }
 }
 
+export async function getServerStatusAlive() {
+    const urlFetch = dominio + '/alive';
+
+    return fetch(urlFetch)
+}
+
 // --- POST ---
 export async function createShortUrl(urlToSave: NewUrl, token: string) {
 

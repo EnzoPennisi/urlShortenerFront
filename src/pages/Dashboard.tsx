@@ -6,6 +6,7 @@ import { Url } from '../types/types';
 import { useAuth0Token } from '../hooks/useAuth0Token';
 import { getUrlByUserId } from '../api/urlApi';
 import { UserContext } from '../context/UserContext';
+import { EmptyUrlMessage } from '../components/Dashboard/EmptyUrlsMessage';
 
 export function Dashboard() {
 
@@ -62,14 +63,19 @@ export function Dashboard() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-8 mt-16 pb-16">
-                {userUrls.map((url) => (
-                    <UrlCard key={url.id} url={url} onEdit={openEditModal} fetchUrls={fetchUserUrls} />
-                ))}
+                {
+                    userUrls.length === 0
+                        ? <EmptyUrlMessage />
+                        :
+                        userUrls.map((url) => (
+                            <UrlCard key={url.id} url={url} onEdit={openEditModal} fetchUrls={fetchUserUrls} />
+                        ))
+                }
             </div>
-
-            {currentUserId &&
+            {
+                currentUserId &&
                 <FormModal showModal={showModal} handleClose={closeModal} fetchUrls={fetchUserUrls} urlId={urlId} currentUserId={currentUserId} />
             }
-        </div>
+        </div >
     );
 }
